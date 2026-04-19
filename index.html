@@ -3,41 +3,790 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>我的个人网站</title>
-  <link rel="stylesheet" href="style.css" />
+  <title>Personal Website</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      scroll-behavior: smooth;
+    }
+
+    :root {
+      --bg: #0f172a;
+      --bg-soft: #111827;
+      --card: rgba(255, 255, 255, 0.08);
+      --text: #f8fafc;
+      --muted: #cbd5e1;
+      --line: rgba(255, 255, 255, 0.12);
+      --accent: #38bdf8;
+      --accent-2: #22c55e;
+      --shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+      --max-width: 1100px;
+    }
+
+    body {
+      font-family: Arial, "PingFang SC", "Microsoft YaHei", sans-serif;
+      background:
+        radial-gradient(circle at top left, rgba(56, 189, 248, 0.18), transparent 30%),
+        radial-gradient(circle at top right, rgba(34, 197, 94, 0.14), transparent 25%),
+        linear-gradient(180deg, #0b1220 0%, #111827 100%);
+      color: var(--text);
+      line-height: 1.7;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .container {
+      width: min(92%, var(--max-width));
+      margin: 0 auto;
+    }
+
+    .navbar {
+      position: sticky;
+      top: 0;
+      z-index: 999;
+      backdrop-filter: blur(12px);
+      background: rgba(15, 23, 42, 0.7);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .nav-inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      min-height: 72px;
+      gap: 20px;
+    }
+
+    .brand {
+      font-size: 22px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+    }
+
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      flex-wrap: wrap;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 18px;
+      flex-wrap: wrap;
+    }
+
+    .nav-links a {
+      color: var(--muted);
+      font-size: 15px;
+      transition: 0.2s ease;
+    }
+
+    .nav-links a:hover {
+      color: #fff;
+    }
+
+    .lang-switch {
+      display: flex;
+      gap: 8px;
+    }
+
+    .lang-btn {
+      border: 1px solid var(--line);
+      background: transparent;
+      color: var(--text);
+      padding: 8px 14px;
+      border-radius: 999px;
+      cursor: pointer;
+      font-size: 14px;
+      transition: 0.2s ease;
+    }
+
+    .lang-btn:hover,
+    .lang-btn.active {
+      background: #fff;
+      color: #0f172a;
+      border-color: #fff;
+    }
+
+    .hero {
+      padding: 96px 0 72px;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.35fr 0.85fr;
+      gap: 28px;
+      align-items: center;
+    }
+
+    .hero-text {
+      padding: 10px 0;
+    }
+
+    .hero-tag {
+      display: inline-block;
+      padding: 8px 14px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      color: var(--accent);
+      background: rgba(255, 255, 255, 0.04);
+      font-size: 14px;
+      margin-bottom: 18px;
+    }
+
+    .hero h1 {
+      font-size: clamp(38px, 7vw, 68px);
+      line-height: 1.08;
+      margin-bottom: 16px;
+      font-weight: 800;
+    }
+
+    .hero-subtitle {
+      font-size: clamp(18px, 2.4vw, 24px);
+      color: #e2e8f0;
+      margin-bottom: 18px;
+      font-weight: 600;
+    }
+
+    .hero-desc {
+      font-size: 17px;
+      color: var(--muted);
+      max-width: 760px;
+      margin-bottom: 28px;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+      margin-bottom: 28px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 13px 20px;
+      border-radius: 12px;
+      font-weight: 700;
+      transition: 0.2s ease;
+      border: 1px solid transparent;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--accent), #60a5fa);
+      color: #0b1220;
+      box-shadow: var(--shadow);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+    }
+
+    .btn-secondary {
+      border-color: var(--line);
+      color: #fff;
+      background: rgba(255, 255, 255, 0.04);
+    }
+
+    .btn-secondary:hover {
+      background: rgba(255, 255, 255, 0.08);
+    }
+
+    .hero-stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+    }
+
+    .stat {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 18px;
+      box-shadow: var(--shadow);
+    }
+
+    .stat h3 {
+      font-size: 26px;
+      margin-bottom: 6px;
+      color: #fff;
+    }
+
+    .stat p {
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .hero-card {
+      background: linear-gradient(180deg, rgba(255,255,255,0.1), rgba(255,255,255,0.05));
+      border: 1px solid var(--line);
+      border-radius: 24px;
+      padding: 28px;
+      box-shadow: var(--shadow);
+    }
+
+    .hero-card .mini-title {
+      color: var(--accent);
+      font-size: 14px;
+      margin-bottom: 10px;
+      font-weight: 700;
+    }
+
+    .hero-card h2 {
+      font-size: 24px;
+      margin-bottom: 12px;
+    }
+
+    .hero-card p {
+      color: var(--muted);
+      margin-bottom: 18px;
+    }
+
+    .hero-card ul {
+      list-style: none;
+      display: grid;
+      gap: 12px;
+    }
+
+    .hero-card li {
+      padding: 14px 16px;
+      border-radius: 14px;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid var(--line);
+      color: #e2e8f0;
+    }
+
+    section {
+      padding: 34px 0 34px;
+    }
+
+    .section-title {
+      font-size: 32px;
+      margin-bottom: 10px;
+    }
+
+    .section-desc {
+      color: var(--muted);
+      margin-bottom: 24px;
+      max-width: 780px;
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 22px;
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 22px;
+    }
+
+    .card {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      padding: 24px;
+      box-shadow: var(--shadow);
+    }
+
+    .card h3 {
+      margin-bottom: 10px;
+      font-size: 22px;
+    }
+
+    .card p {
+      color: var(--muted);
+    }
+
+    .list {
+      list-style: none;
+      display: grid;
+      gap: 12px;
+      margin-top: 14px;
+    }
+
+    .list li {
+      padding-left: 18px;
+      position: relative;
+      color: var(--muted);
+    }
+
+    .list li::before {
+      content: "";
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--accent);
+      position: absolute;
+      left: 0;
+      top: 11px;
+    }
+
+    .timeline {
+      display: grid;
+      gap: 18px;
+    }
+
+    .timeline-item {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 22px;
+    }
+
+    .timeline-top {
+      display: flex;
+      justify-content: space-between;
+      gap: 14px;
+      flex-wrap: wrap;
+      margin-bottom: 8px;
+    }
+
+    .timeline-top h3 {
+      font-size: 21px;
+    }
+
+    .timeline-time {
+      color: var(--accent);
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    .skills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 8px;
+    }
+
+    .skill {
+      padding: 10px 14px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid var(--line);
+      color: #e2e8f0;
+      font-size: 14px;
+    }
+
+    .contact-card {
+      display: grid;
+      gap: 14px;
+    }
+
+    .contact-item {
+      padding: 16px 18px;
+      border-radius: 16px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid var(--line);
+    }
+
+    .contact-label {
+      color: var(--accent);
+      font-size: 13px;
+      font-weight: 700;
+      margin-bottom: 4px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    footer {
+      padding: 36px 0 52px;
+      color: #94a3b8;
+      text-align: center;
+      font-size: 14px;
+    }
+
+    @media (max-width: 900px) {
+      .hero-grid,
+      .grid-2,
+      .grid-3 {
+        grid-template-columns: 1fr;
+      }
+
+      .hero {
+        padding-top: 72px;
+      }
+
+      .hero-stats {
+        grid-template-columns: 1fr;
+      }
+
+      .nav-inner {
+        align-items: flex-start;
+        padding: 14px 0;
+      }
+
+      .nav-right {
+        width: 100%;
+        justify-content: space-between;
+      }
+    }
+
+    @media (max-width: 560px) {
+      .nav-links {
+        gap: 12px;
+      }
+
+      .hero-actions {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .btn {
+        width: 100%;
+      }
+
+      .section-title {
+        font-size: 28px;
+      }
+    }
+  </style>
 </head>
 <body>
+  <nav class="navbar">
+    <div class="container nav-inner">
+      <div class="brand" data-zh="个人主页" data-en="Personal Site">个人主页</div>
+
+      <div class="nav-right">
+        <div class="nav-links">
+          <a href="#about" data-zh="关于我" data-en="About">关于我</a>
+          <a href="#interests" data-zh="研究方向" data-en="Interests">研究方向</a>
+          <a href="#education" data-zh="教育背景" data-en="Education">教育背景</a>
+          <a href="#skills" data-zh="技能" data-en="Skills">技能</a>
+          <a href="#contact" data-zh="联系我" data-en="Contact">联系我</a>
+        </div>
+
+        <div class="lang-switch">
+          <button class="lang-btn active" data-lang="zh" onclick="setLanguage('zh')">中文</button>
+          <button class="lang-btn" data-lang="en" onclick="setLanguage('en')">English</button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
   <header class="hero">
-    <h1>你好，我是你的名字</h1>
-    <p>这里是我的个人网站</p>
-    <a href="#about" class="btn">了解我</a>
+    <div class="container hero-grid">
+      <div class="hero-text">
+        <div class="hero-tag"
+          data-zh="工程力学 · 机械工程 · 流体分析"
+          data-en="Engineering Mechanics · Mechanical Engineering · Fluid Analysis">
+          工程力学 · 机械工程 · 流体分析
+        </div>
+
+        <h1 data-zh="Your Name" data-en="Your Name">Your Name</h1>
+
+        <div class="hero-subtitle"
+          data-zh="工程力学与机械工程方向学习者"
+          data-en="Student in Engineering Mechanics and Mechanical Engineering">
+          工程力学与机械工程方向学习者
+        </div>
+
+        <p class="hero-desc"
+          data-zh="我关注工程力学、流体力学、建模分析与工程问题求解，重视用数学、物理和计算方法去理解复杂系统的行为，并希望把扎实的理论基础逐步转化为解决真实工程问题的能力。"
+          data-en="I focus on engineering mechanics, fluid dynamics, modeling analysis, and engineering problem solving. I value using mathematics, physics, and computational methods to understand complex systems, and I aim to turn solid theoretical foundations into the ability to solve real engineering problems.">
+          我关注工程力学、流体力学、建模分析与工程问题求解，重视用数学、物理和计算方法去理解复杂系统的行为，并希望把扎实的理论基础逐步转化为解决真实工程问题的能力。
+        </p>
+
+        <div class="hero-actions">
+          <a href="#about" class="btn btn-primary"
+            data-zh="了解我"
+            data-en="About Me">了解我</a>
+          <a href="#contact" class="btn btn-secondary"
+            data-zh="联系我"
+            data-en="Contact">联系我</a>
+        </div>
+
+        <div class="hero-stats">
+          <div class="stat">
+            <h3 data-zh="力学" data-en="Mechanics">力学</h3>
+            <p data-zh="关注理论分析与工程应用之间的联系" data-en="Connecting theoretical analysis with engineering applications">
+              关注理论分析与工程应用之间的联系
+            </p>
+          </div>
+
+          <div class="stat">
+            <h3 data-zh="流体" data-en="Fluid">流体</h3>
+            <p data-zh="持续关注流动、压力与建模问题" data-en="Continued interest in flow, pressure, and modeling problems">
+              持续关注流动、压力与建模问题
+            </p>
+          </div>
+
+          <div class="stat">
+            <h3 data-zh="建模" data-en="Modeling">建模</h3>
+            <p data-zh="用数学与计算方法分析复杂系统" data-en="Using mathematics and computation to analyze complex systems">
+              用数学与计算方法分析复杂系统
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="hero-card">
+        <div class="mini-title" data-zh="当前关注" data-en="Current Focus">当前关注</div>
+        <h2 data-zh="学习与发展方向" data-en="Learning & Development Areas">学习与发展方向</h2>
+        <p
+          data-zh="这部分你后面可以继续替换成自己的真实课程、研究兴趣或项目经历。先把网站搭起来，比空着强。"
+          data-en="You can later replace this section with your real courses, research interests, or project experience. Getting the site online first is better than leaving it empty.">
+          这部分你后面可以继续替换成自己的真实课程、研究兴趣或项目经历。先把网站搭起来，比空着强。
+        </p>
+        <ul>
+          <li data-zh="工程力学基础与问题分析" data-en="Fundamentals of engineering mechanics and problem analysis">
+            工程力学基础与问题分析
+          </li>
+          <li data-zh="流体力学与相关建模理解" data-en="Understanding fluid mechanics and related modeling">
+            流体力学与相关建模理解
+          </li>
+          <li data-zh="机械工程中的理论与应用结合" data-en="Combining theory and application in mechanical engineering">
+            机械工程中的理论与应用结合
+          </li>
+          <li data-zh="工程计算与数值方法的持续学习" data-en="Continuous learning in engineering computation and numerical methods">
+            工程计算与数值方法的持续学习
+          </li>
+        </ul>
+      </div>
+    </div>
   </header>
 
   <main>
-    <section id="about" class="section">
-      <h2>关于我</h2>
-      <p>
-        这里写你的简介，比如你的专业、经历、擅长的方向、你现在在做什么。
-      </p>
+    <section id="about">
+      <div class="container">
+        <h2 class="section-title" data-zh="关于我" data-en="About Me">关于我</h2>
+        <p class="section-desc"
+          data-zh="我是一名工程力学与机械工程方向的学习者，关注力学分析、流体问题、工程建模以及计算方法在实际问题中的应用。我重视从原理出发理解工程现象，也希望在更深入的学习中不断提升分析能力、建模能力与解决复杂问题的能力。"
+          data-en="I am a student focused on engineering mechanics and mechanical engineering, with interests in mechanics analysis, fluid-related problems, engineering modeling, and the application of computational methods to real problems. I value understanding engineering phenomena from first principles and hope to continuously improve my analytical, modeling, and problem-solving abilities through deeper study.">
+          我是一名工程力学与机械工程方向的学习者，关注力学分析、流体问题、工程建模以及计算方法在实际问题中的应用。我重视从原理出发理解工程现象，也希望在更深入的学习中不断提升分析能力、建模能力与解决复杂问题的能力。
+        </p>
+
+        <div class="grid-2">
+          <div class="card">
+            <h3 data-zh="我的特点" data-en="My Strengths">我的特点</h3>
+            <ul class="list">
+              <li
+                data-zh="重视数学、物理与力学基础"
+                data-en="Strong emphasis on mathematics, physics, and mechanics fundamentals">
+                重视数学、物理与力学基础
+              </li>
+              <li
+                data-zh="喜欢从原理和模型出发理解问题"
+                data-en="Prefer understanding problems from principles and models">
+                喜欢从原理和模型出发理解问题
+              </li>
+              <li
+                data-zh="对复杂工程问题保持持续兴趣"
+                data-en="Maintain continuous interest in complex engineering problems">
+                对复杂工程问题保持持续兴趣
+              </li>
+              <li
+                data-zh="愿意长期打磨理论与分析能力"
+                data-en="Willing to steadily improve theoretical and analytical abilities">
+                愿意长期打磨理论与分析能力
+              </li>
+            </ul>
+          </div>
+
+          <div class="card">
+            <h3 data-zh="未来目标" data-en="Future Goals">未来目标</h3>
+            <p
+              data-zh="未来我希望继续围绕工程力学、机械工程与流体分析方向深入学习，在更系统的训练中提升理论理解、建模分析和工程应用能力，并逐步形成更加成熟的工程思维。"
+              data-en="In the future, I hope to continue deepening my studies in engineering mechanics, mechanical engineering, and fluid analysis, improving my theoretical understanding, modeling skills, and engineering application ability through more systematic training, and gradually developing a more mature engineering mindset.">
+              未来我希望继续围绕工程力学、机械工程与流体分析方向深入学习，在更系统的训练中提升理论理解、建模分析和工程应用能力，并逐步形成更加成熟的工程思维。
+            </p>
+          </div>
+        </div>
+      </div>
     </section>
 
-    <section id="projects" class="section">
-      <h2>项目 / 作品</h2>
-      <div class="card">
-        <h3>项目 1</h3>
-        <p>这里写项目简介。</p>
-      </div>
-      <div class="card">
-        <h3>项目 2</h3>
-        <p>这里写项目简介。</p>
+    <section id="interests">
+      <div class="container">
+        <h2 class="section-title" data-zh="研究方向" data-en="Research Interests">研究方向</h2>
+        <p class="section-desc"
+          data-zh="这里先放你最核心的几个方向，不要堆一大堆听起来很厉害但你自己都说不清的词。少一点，准一点。"
+          data-en="List only your most important directions here. Do not stuff it with impressive words you cannot clearly explain. Fewer, but more accurate.">
+          这里先放你最核心的几个方向，不要堆一大堆听起来很厉害但你自己都说不清的词。少一点，准一点。
+        </p>
+
+        <div class="grid-3">
+          <div class="card">
+            <h3 data-zh="工程力学" data-en="Engineering Mechanics">工程力学</h3>
+            <p
+              data-zh="关注受力分析、运动规律以及连续介质中的基本力学问题，重视理论基础与工程现象之间的联系。"
+              data-en="Interested in force analysis, motion laws, and fundamental mechanics problems in continuous media, with an emphasis on connecting theory to engineering phenomena.">
+              关注受力分析、运动规律以及连续介质中的基本力学问题，重视理论基础与工程现象之间的联系。
+            </p>
+          </div>
+
+          <div class="card">
+            <h3 data-zh="流体力学" data-en="Fluid Dynamics">流体力学</h3>
+            <p
+              data-zh="对流动、压力分布、边界条件与流体模型保持持续兴趣，希望逐步加深对相关理论与应用问题的理解。"
+              data-en="Continuously interested in flow behavior, pressure distribution, boundary conditions, and fluid models, with the goal of deepening understanding of both theory and application.">
+              对流动、压力分布、边界条件与流体模型保持持续兴趣，希望逐步加深对相关理论与应用问题的理解。
+            </p>
+          </div>
+
+          <div class="card">
+            <h3 data-zh="建模与计算分析" data-en="Modeling & Computational Analysis">建模与计算分析</h3>
+            <p
+              data-zh="关注如何将真实工程问题抽象成数学模型，并利用分析方法和计算工具进行求解、验证与解释。"
+              data-en="Interested in abstracting real engineering problems into mathematical models and solving, validating, and interpreting them with analytical methods and computational tools.">
+              关注如何将真实工程问题抽象成数学模型，并利用分析方法和计算工具进行求解、验证与解释。
+            </p>
+          </div>
+        </div>
       </div>
     </section>
 
-    <section id="contact" class="section">
-      <h2>联系方式</h2>
-      <p>Email：your@email.com</p>
-      <p>Instagram / LinkedIn / 微信都可以放</p>
+    <section id="education">
+      <div class="container">
+        <h2 class="section-title" data-zh="教育背景" data-en="Education">教育背景</h2>
+        <p class="section-desc"
+          data-zh="这块你后面直接替换成自己的学校、专业、时间就行。"
+          data-en="Later, simply replace this with your actual university, major, and dates.">
+          这块你后面直接替换成自己的学校、专业、时间就行。
+        </p>
+
+        <div class="timeline">
+          <div class="timeline-item">
+            <div class="timeline-top">
+              <h3 data-zh="Your University" data-en="Your University">Your University</h3>
+              <div class="timeline-time" data-zh="20XX - 20XX" data-en="20XX - 20XX">20XX - 20XX</div>
+            </div>
+            <p
+              data-zh="专业：工程力学 / 机械工程 / 相关方向"
+              data-en="Major: Engineering Mechanics / Mechanical Engineering / Related Field">
+              专业：工程力学 / 机械工程 / 相关方向
+            </p>
+            <ul class="list">
+              <li
+                data-zh="重点学习工程力学、流体力学、数学分析与工程建模"
+                data-en="Focused on engineering mechanics, fluid dynamics, mathematical analysis, and engineering modeling">
+                重点学习工程力学、流体力学、数学分析与工程建模
+              </li>
+              <li
+                data-zh="持续提升理论理解、推导能力与问题分析能力"
+                data-en="Continuously improving theoretical understanding, derivation skills, and problem analysis">
+                持续提升理论理解、推导能力与问题分析能力
+              </li>
+            </ul>
+          </div>
+
+          <div class="timeline-item">
+            <div class="timeline-top">
+              <h3 data-zh="学术与发展方向" data-en="Academic & Development Focus">学术与发展方向</h3>
+              <div class="timeline-time" data-zh="持续进行中" data-en="Ongoing">持续进行中</div>
+            </div>
+            <p
+              data-zh="希望继续在工程力学、流体分析、数值方法与机械工程应用等方向深入学习，并逐步形成更清晰的研究兴趣。"
+              data-en="I hope to continue deepening my studies in engineering mechanics, fluid analysis, numerical methods, and mechanical engineering applications, while gradually shaping clearer research interests.">
+              希望继续在工程力学、流体分析、数值方法与机械工程应用等方向深入学习，并逐步形成更清晰的研究兴趣。
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="skills">
+      <div class="container">
+        <h2 class="section-title" data-zh="技能与能力" data-en="Skills & Competencies">技能与能力</h2>
+        <p class="section-desc"
+          data-zh="别瞎写。会什么写什么，不会就别放。"
+          data-en="Do not exaggerate. Only include what you can actually do.">
+          别瞎写。会什么写什么，不会就别放。
+        </p>
+
+        <div class="card">
+          <div class="skills">
+            <span class="skill" data-zh="工程力学基础" data-en="Engineering Mechanics Fundamentals">工程力学基础</span>
+            <span class="skill" data-zh="流体力学基础" data-en="Fundamentals of Fluid Dynamics">流体力学基础</span>
+            <span class="skill" data-zh="数学建模" data-en="Mathematical Modeling">数学建模</span>
+            <span class="skill" data-zh="工程问题分析" data-en="Engineering Problem Analysis">工程问题分析</span>
+            <span class="skill" data-zh="理论推导" data-en="Theoretical Derivation">理论推导</span>
+            <span class="skill" data-zh="英文专业资料阅读" data-en="Reading Technical Materials in English">英文专业资料阅读</span>
+            <span class="skill" data-zh="计算分析能力" data-en="Computational Analysis">计算分析能力</span>
+            <span class="skill" data-zh="持续学习能力" data-en="Continuous Learning Ability">持续学习能力</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact">
+      <div class="container">
+        <h2 class="section-title" data-zh="联系我" data-en="Contact">联系我</h2>
+        <p class="section-desc"
+          data-zh="下面这些链接记得换成你自己的。"
+          data-en="Remember to replace the links below with your own.">
+          下面这些链接记得换成你自己的。
+        </p>
+
+        <div class="grid-2">
+          <div class="card contact-card">
+            <div class="contact-item">
+              <div class="contact-label">Email</div>
+              <a href="mailto:your@email.com">your@email.com</a>
+            </div>
+
+            <div class="contact-item">
+              <div class="contact-label">GitHub</div>
+              <a href="https://github.com/yourusername" target="_blank">https://github.com/yourusername</a>
+            </div>
+
+            <div class="contact-item">
+              <div class="contact-label">LinkedIn</div>
+              <a href="https://www.linkedin.com/in/yourname" target="_blank">https://www.linkedin.com/in/yourname</a>
+            </div>
+          </div>
+
+          <div class="card">
+            <h3 data-zh="一句话说明" data-en="One-Line Statement">一句话说明</h3>
+            <p
+              data-zh="欢迎通过邮件或 GitHub 与我联系，交流工程力学、机械工程、流体分析或相关学习方向。"
+              data-en="Feel free to contact me via email or GitHub to discuss engineering mechanics, mechanical engineering, fluid analysis, or related learning directions.">
+              欢迎通过邮件或 GitHub 与我联系，交流工程力学、机械工程、流体分析或相关学习方向。
+            </p>
+          </div>
+        </div>
+      </div>
     </section>
   </main>
+
+  <footer>
+    <div class="container">
+      <span data-zh="© 2026 Coldplaum. All rights reserved."
+            data-en="© 2026 Coldplaum. All rights reserved.">
+        © 2026 Your Name. All rights reserved.
+      </span>
+    </div>
+  </footer>
+
+  <script>
+    function setLanguage(lang) {
+      const elements = document.querySelectorAll("[data-zh][data-en]");
+      elements.forEach(el => {
+        el.textContent = el.getAttribute("data-" + lang);
+      });
+
+      document.documentElement.lang = lang === "zh" ? "zh-CN" : "en";
+
+      const buttons = document.querySelectorAll(".lang-btn");
+      buttons.forEach(btn => btn.classList.remove("active"));
+      const activeBtn = document.querySelector('.lang-btn[data-lang="' + lang + '"]');
+      if (activeBtn) activeBtn.classList.add("active");
+
+      localStorage.setItem("language", lang);
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      const savedLang = localStorage.getItem("language") || "zh";
+      setLanguage(savedLang);
+    });
+  </script>
 </body>
 </html>
